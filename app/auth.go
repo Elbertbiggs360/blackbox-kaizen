@@ -1,8 +1,8 @@
 package app
 
 import (
-	"blackbox-kaizen/models/"
-	u "blackbox-kaizen/utils/"
+	"blackbox-kaizen/models"
+	u "blackbox-kaizen/utils"
 	"context"
 	"fmt"
 	"net/http"
@@ -14,7 +14,7 @@ import (
 
 // JwtAuthentication : function to handle generation of token
 var JwtAuthentication = func(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w htttp.ResponseWriter, r *http.Request) {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		notAuth := []string{"api/user/new", "/api/user/login"}
 		requestPath := r.URL.Path // current request path
 
@@ -46,7 +46,7 @@ var JwtAuthentication = func(next http.Handler) http.Handler {
 			return
 		}
 
-		token := splitted[1]
+		tokenPart := splitted[1]
 		tk := &models.Token{}
 
 		token, err := jwt.ParseWithClaims(tokenPart, tk, func(token *jwt.Token) (interface{}, error) {
